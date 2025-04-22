@@ -16,4 +16,7 @@ public class LopHocService {
         return lopHocRepository.findLopChuaDangKy(hocVienId);
     }
 
+    public List<LopHoc> getLopHocByIds(List<Integer> ids) {
+        return lopHocRepository.findAllById(ids);
+    }
 }
