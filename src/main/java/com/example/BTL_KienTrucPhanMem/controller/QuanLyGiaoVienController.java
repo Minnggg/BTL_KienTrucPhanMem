@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/giaovien")
@@ -60,6 +61,57 @@ public class QuanLyGiaoVienController {
         repository.save(nv);
 
         return "redirect:/admin/giaovien";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteGiaoVien(@PathVariable("id") Integer id) {
+        Optional<NhanVien> optionalNV = repository.findById(id);
+        if (optionalNV.isPresent()) {
+            NhanVien nhanVien = optionalNV.get();
+            Integer thanhVienId = nhanVien.getThanhVien().getId();
+
+            // Xóa nhân viên
+            repository.deleteById(id);
+
+            // Xóa thành viên tương ứng
+            thanhVienRepo.deleteById(thanhVienId);
+        }
+
+        return "redirect:/admin/giaovien"; // trang danh sách nhân viên
+    }
+
+    @PostMapping("/update")
+    public String updateGiaoVien(@RequestParam Map<String, String> params) {
+        Integer id = Integer.parseInt(params.get("id"));
+        String hoten = params.get("hoten");
+        LocalDate ngaysinh = LocalDate.parse(params.get("ngaysinh"));
+        String email = params.get("email");
+        String sdt = params.get("sdt");
+        String username = params.get("username");
+        String chuyenMon = params.get("chuyenMon");
+        String trinhDo = params.get("trinhDo");
+
+        Optional<NhanVien> optionalNV = repository.findById(id);
+        if (optionalNV.isPresent()) {
+            NhanVien nv = optionalNV.get();
+            ThanhVien thanhVien = nv.getThanhVien();
+
+            thanhVien.setHoten(hoten);
+            thanhVien.setNgaysinh(ngaysinh);
+            thanhVien.setEmail(email);
+            thanhVien.setSdt(sdt);
+
+            nv.setUsername(username);
+            nv.setChuyenMon(chuyenMon);
+            nv.setTrinhDo(trinhDo);
+
+            thanhVienRepo.save(thanhVien);
+            repository.save(nv);
+
+            return "redirect:/admin/giaovien";
+        } else {
+            return "redirect:/admin/giaovien";
+        }
     }
 
 }
