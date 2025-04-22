@@ -12,7 +12,7 @@ public class HocVien {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer thanhVienId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "thanhVienId")
     private ThanhVien thanhVien;
 }

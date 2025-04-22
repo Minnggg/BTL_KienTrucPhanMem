@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chọn Học Viên</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-4">
+
+<h2 class="mb-4">Tìm và chọn học viên</h2>
+
+<!-- Form tìm kiếm -->
+<form method="get" th:action="@{/hocvien/chon}" class="mb-3 d-flex gap-2">
+    <input type="text" class="form-control w-50" name="keyword" placeholder="Nhập tên học viên..." th:value="${keyword}">
+    <button type="submit" class="btn btn-primary">Tìm</button>
+</form>
+
+<!-- Nút Thêm mới -->
+<a class="btn btn-success mb-3" href="/hocvien/themmoi">+ Thêm Mới Học Viên</a>
+
+<!-- ✅ Form chọn học viên và xác nhận -->
+<form method="get" th:action="@{/chonlop}">
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Chọn</th>
+            <th>Mã HV</th>
+            <th>Họ Tên</th>
+            <th>Ngày Sinh</th>
+            <th>SĐT</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hv : ${hocViens}">
+            <td>
+                <input type="radio" name="selectedHV" th:value="${hv.thanhVien.id}" required />
+            </td>
+            <td th:text="${hv.thanhVien.id}"></td>
+            <td th:text="${hv.thanhVien.hoten}"></td>
+            <td th:text="${hv.thanhVien.ngaysinh}"></td>
+            <td th:text="${hv.thanhVien.sdt}"></td>
+            <td th:text="${hv.thanhVien.email}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="mt-4 d-flex gap-3">
+        <button type="submit" class="btn btn-primary">Xác Nhận</button>
+        <a class="btn btn-secondary" href="/admin/dashboard">Hủy</a>
+    </div>
+</form>
+
+</body>
+</html>

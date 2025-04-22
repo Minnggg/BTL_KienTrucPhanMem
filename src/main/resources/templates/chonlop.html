@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chọn Lớp</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+        }
+        .table {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+        }
+        .table td, .table th {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table th {
+            background-color: #343a40;
+            color: white;
+        }
+        .form-control {
+            padding: 0.75rem 1.25rem;
+            font-size: 1.2rem;
+        }
+        .btn {
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+        }
+        .btn-success {
+            margin-bottom: 20px;
+        }
+        .d-flex {
+            justify-content: space-between;
+        }
+        .mt-4 {
+            margin-top: 2rem;
+        }
+        .checkbox-custom {
+            transform: scale(1.2);
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="container mt-4">
+
+<h2 class="mb-4">Danh sách lớp chưa đăng ký</h2>
+
+<!-- Form chọn lớp -->
+<form method="post" th:action="@{/xacnhanlop}" class="mb-4">
+    <input type="hidden" name="hocVienId" th:value="${hv.thanhVienId}" />
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Tên lớp</th>
+            <th>Mô tả</th>
+            <th>Mức độ</th>
+            <th>Chương trình</th>
+            <th>Chọn</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="lop : ${listLop}">
+            <td th:text="${lop.ten}">Tên lớp</td>
+            <td th:text="${lop.mota}">Mô tả</td>
+            <td th:text="${lop.mucDo.ten}">Mức độ</td>
+            <td th:text="${lop.mucDo.chuongTrinhHoc.ten}">Chương trình</td>
+            <td>
+                <input type="checkbox" name="lopIds" th:value="${lop.id}" class="checkbox-custom" />
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="mt-4 d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary">Xác Nhận</button>
+        <a class="btn btn-secondary" href="/admin/dang-ky-hoc/chonhv">Quay lại</a>
+    </div>
+</form>
+
+</body>
+</html>
