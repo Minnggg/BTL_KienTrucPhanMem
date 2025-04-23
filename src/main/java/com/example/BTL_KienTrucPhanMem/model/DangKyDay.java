@@ -19,9 +19,5 @@ public class DangKyDay {
     @ManyToOne
     @JoinColumn(name = "lopHocId")
     private LopHoc lopHoc;
-
-    @ManyToOne
-    @JoinColumn(name = "kipHocId")
-    private KipHoc kipHoc;
 }
 

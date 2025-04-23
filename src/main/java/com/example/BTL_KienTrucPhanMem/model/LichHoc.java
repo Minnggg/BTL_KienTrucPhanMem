@@ -26,5 +26,9 @@ public class LichHoc {
     @ManyToOne
     @JoinColumn(name = "dangKyDayId")
     private DangKyDay dangKyDay;
+
+    @ManyToOne
+    @JoinColumn(name = "kipHocId")
+    private KipHoc kipHoc;
 }
 
