@@ -13,4 +13,7 @@ public interface LopHocRepository extends JpaRepository<LopHoc, Integer> {
             "SELECT ldk.lopHoc.id FROM LopHocDangKy ldk WHERE ldk.dangKyHoc.thanhVien.id = :hocVienId)")
     List<LopHoc> findLopChuaDangKy(@Param("hocVienId") Integer hocVienId);
 
+    @Query("SELECT lh FROM LopHoc lh WHERE lh.id NOT IN (SELECT dkd.lopHoc.id FROM DangKyDay dkd WHERE dkd.thanhVien.id = :thanhVienId)")
+    List<LopHoc> findLopHocChuaDangKyByThanhVienId(@Param("thanhVienId") Integer thanhVienId);
+
 }

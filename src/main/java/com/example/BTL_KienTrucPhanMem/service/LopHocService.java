@@ -19,4 +19,8 @@ public class LopHocService {
     public List<LopHoc> getLopHocByIds(List<Integer> ids) {
         return lopHocRepository.findAllById(ids);
     }
+
+    public List<LopHoc> findAllLH() {
+        return lopHocRepository.findAll();
+    }
 }

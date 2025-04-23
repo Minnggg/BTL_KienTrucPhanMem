@@ -22,6 +22,6 @@ public class AuthController {
 
     @GetMapping("/giaovien/dashboard")
     public String gvPage() {
-        return "gv-dashboard"; // trang dashboard cho giáo viên
+        return "teacher-dashboard"; // trang dashboard cho giáo viên
     }
 }

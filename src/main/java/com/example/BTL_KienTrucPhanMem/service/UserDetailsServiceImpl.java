@@ -23,4 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .roles(nv.getVitri()) // "ADMIN" hoặc "GIAOVIEN"
                 .build();
     }
+
+    public NhanVien findNhanVienByUsername(String username) {
+        return nhanVienRepo.findByUsername(username).orElse(null);
+    }
 }
