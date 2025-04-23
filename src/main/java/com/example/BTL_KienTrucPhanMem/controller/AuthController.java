@@ -5,6 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class AuthController {
+    @GetMapping("/")
+    public String gologinForm() {
+        return "redirect:/login"; // login.html trong templates
+    }
+
     @GetMapping("/login")
     public String loginForm() {
         return "login"; // login.html trong templates
