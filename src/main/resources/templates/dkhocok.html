@@ -10,16 +10,18 @@
 
     <div class="text-center mb-4">
         <h3 class="text-success fw-bold">✅ Đăng ký thành công!</h3>
-        <p class="fs-5 text-muted">Thông tin đăng ký của bạn đã được lưu.</p>
+        <p class="fs-5 text-muted">Thông tin đăng ký của học viên đã được lưu.</p>
     </div>
 
     <!-- Thông tin học viên -->
     <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white fw-semibold">
+        <div class="card-header bg-dark text-white fw-semibold">
             Thông tin học viên
         </div>
         <div class="card-body">
             <p><strong>Họ tên:</strong> <span th:text="${hv.thanhVien.hoten}">Nguyễn Văn A</span></p>
+            <p><strong>Họ tên:</strong> <span th:text="${hv.thanhVien.ngaysinh}">01/01/2001</span></p>
+            <p><strong>Họ tên:</strong> <span th:text="${hv.thanhVien.sdt}">0123456789</span></p>
             <p><strong>Email:</strong> <span th:text="${hv.thanhVien.email}">email@example.com</span></p>
         </div>
     </div>
@@ -55,7 +57,7 @@
     </div>
 
     <div class="text-center mt-4">
-        <a class="btn btn-outline-primary" href="/admin/dashboard" role="button">Về trang chủ</a>
+        <a class="btn btn-outline-primary w-100 btn-lg" href="/admin/dashboard" role="button">Về dashboard</a>
     </div>
 
 </div>

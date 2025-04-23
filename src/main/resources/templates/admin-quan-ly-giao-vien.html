@@ -5,108 +5,139 @@
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="container mt-5">
-
-<h2>Danh Sách Giáo Viên</h2>
-
-<div class="mb-3 d-flex justify-content-between">
-    <a class="btn btn-primary" th:href="@{/admin/dashboard}">🏠 Quay lại trang điều khiển</a>
-    <a class="btn btn-success" th:href="@{/admin/giaovien/form}">➕ Thêm Giáo Viên</a>
+<body>
+<!-- Navbar -->
+<div class="py-1 px-4 bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" th:href="@{/admin/dashboard}">Admin Dashboard</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/giaovien}">Quản lý giáo viên</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/dang-ky-hoc/chonhv}">Đăng kí học</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
 
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
-    <tr>
-        <th>ID</th>
-        <th>Họ tên</th>
-        <th>Ngày sinh</th>
-        <th>Email</th>
-        <th>Số điện thoại</th>
-        <th>Username</th>
-        <th>Chuyên môn</th>
-        <th>Trình độ</th>
-        <th>Hành động</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="gv : ${listGV}">
-        <td th:text="${gv.id}"></td>
-        <td th:text="${gv.thanhVien.hoten}"></td>
-        <td th:text="${gv.thanhVien.ngaysinh}"></td>
-        <td th:text="${gv.thanhVien.email}"></td>
-        <td th:text="${gv.thanhVien.sdt}"></td>
-        <td th:text="${gv.username}"></td>
-        <td th:text="${gv.chuyenMon}"></td>
-        <td th:text="${gv.trinhDo}"></td>
-        <td>
-            <a class="btn btn-warning btn-sm me-1"
-               href="#"
-               data-bs-toggle="modal"
-               th:attr="data-bs-target='#editModal__' + ${gv.id}">✏️ Sửa</a>
+<!-- Content -->
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Danh Sách Giáo Viên</h2>
 
-            <a class="btn btn-danger btn-sm" th:href="@{'/admin/giaovien/delete/' + ${gv.id}}"
-               onclick="return confirm('Bạn có chắc muốn xóa giáo viên này không?');">🗑️ Xóa</a>
-        </td>
-        <!-- Edit Modal -->
-        <div class="modal fade" th:id="'editModal__' + ${gv.id}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <form th:action="@{/admin/giaovien/update}" method="post">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Cập nhật thông tin nhân viên</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="id" th:value="${gv.id}"/>
+    <div class="mb-3 d-flex justify-content-between">
+        <a class="btn btn-outline-secondary" th:href="@{/admin/dashboard}">Quay lại trang điều khiển</a>
+        <a class="btn btn-success" th:href="@{/admin/giaovien/form}">Thêm Giáo Viên</a>
+    </div>
 
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label class="form-label">Họ tên</label>
-                                    <input type="text" class="form-control" name="hoten" th:value="${gv.thanhVien.hoten}" required>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th>Username</th>
+            <th>Chuyên môn</th>
+            <th>Trình độ</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="gv : ${listGV}">
+            <td th:text="${gv.id}"></td>
+            <td th:text="${gv.thanhVien.hoten}"></td>
+            <td th:text="${gv.thanhVien.ngaysinh}"></td>
+            <td th:text="${gv.thanhVien.email}"></td>
+            <td th:text="${gv.thanhVien.sdt}"></td>
+            <td th:text="${gv.username}"></td>
+            <td th:text="${gv.chuyenMon}"></td>
+            <td th:text="${gv.trinhDo}"></td>
+            <td>
+                <a class="btn btn-primary btn-sm me-1"
+                   href="#"
+                   data-bs-toggle="modal"
+                   th:attr="data-bs-target='#editModal__' + ${gv.id}">Sửa</a>
+
+                <a class="btn btn-danger btn-sm" th:href="@{'/admin/giaovien/delete/' + ${gv.id}}"
+                   onclick="return confirm('Bạn có chắc muốn xóa giáo viên này không?');">Xóa</a>
+            </td>
+
+            <!-- Edit Modal -->
+            <div class="modal fade" th:id="'editModal__' + ${gv.id}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form th:action="@{/admin/giaovien/update}" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Cập nhật thông tin nhân viên</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Đóng"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" th:value="${gv.id}"/>
+
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label class="form-label">Họ tên</label>
+                                        <input type="text" class="form-control" name="hoten"
+                                               th:value="${gv.thanhVien.hoten}" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Ngày sinh</label>
+                                        <input type="date" class="form-control" name="ngaysinh"
+                                               th:value="${gv.thanhVien.ngaysinh}" required>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <label class="form-label">Ngày sinh</label>
-                                    <input type="date" class="form-control" name="ngaysinh" th:value="${gv.thanhVien.ngaysinh}" required>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email"
+                                           th:value="${gv.thanhVien.email}"
+                                           required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Số điện thoại</label>
+                                    <input type="text" class="form-control" name="sdt" th:value="${gv.thanhVien.sdt}"
+                                           required>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label class="form-label">Username</label>
+                                        <input type="text" class="form-control" name="username"
+                                               th:value="${gv.username}"
+                                               required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Chuyên môn</label>
+                                        <input type="text" class="form-control" name="chuyenMon"
+                                               th:value="${gv.chuyenMon}"
+                                               required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Trình độ</label>
+                                        <input type="text" class="form-control" name="trinhDo" th:value="${gv.trinhDo}"
+                                               required>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" th:value="${gv.thanhVien.email}" required>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                             </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Số điện thoại</label>
-                                <input type="text" class="form-control" name="sdt" th:value="${gv.thanhVien.sdt}" required>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label class="form-label">Username</label>
-                                    <input type="text" class="form-control" name="username" th:value="${gv.username}" required>
-                                </div>
-                                <div class="col">
-                                    <label class="form-label">Chuyên môn</label>
-                                    <input type="text" class="form-control" name="chuyenMon" th:value="${gv.chuyenMon}" required>
-                                </div>
-                                <div class="col">
-                                    <label class="form-label">Trình độ</label>
-                                    <input type="text" class="form-control" name="trinhDo" th:value="${gv.trinhDo}" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </tr>
-    </tbody>
-</table>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
