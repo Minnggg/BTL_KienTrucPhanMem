@@ -2,7 +2,7 @@ package com.example.BTL_KienTrucPhanMem.service;
 
 import com.example.BTL_KienTrucPhanMem.model.HocVien;
 import com.example.BTL_KienTrucPhanMem.model.ThanhVien;
-import com.example.BTL_KienTrucPhanMem.repository.HVRepository;
+import com.example.BTL_KienTrucPhanMem.repository.HocVienRepository;
 import com.example.BTL_KienTrucPhanMem.repository.ThanhVienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 public class HocVienService {
 
     @Autowired
-    private HVRepository hvRepository;
+    private HocVienRepository hocVienRepository;
 
     @Autowired
     private ThanhVienRepository thanhVienRepository;
@@ -25,16 +25,16 @@ public class HocVienService {
         hocVien.setThanhVien(savedTV);
 
         // Lưu HocVien
-        hvRepository.save(hocVien);
+        hocVienRepository.save(hocVien);
     }
 
     public List<HocVien> getAllHocVien() {
-        return hvRepository.findAll();
+        return hocVienRepository.findAll();
     }
 
 
     public List<HocVien> searchByTen(String keyword) {
-        return hvRepository.searchByHoTen(keyword);
+        return hocVienRepository.searchByHoTen(keyword);
     }
 
 }

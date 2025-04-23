@@ -4,7 +4,7 @@ import com.example.BTL_KienTrucPhanMem.model.DangKyHoc;
 import com.example.BTL_KienTrucPhanMem.model.HocVien;
 import com.example.BTL_KienTrucPhanMem.model.LopHocDangKy;
 import com.example.BTL_KienTrucPhanMem.repository.DangKyHocRepository;
-import com.example.BTL_KienTrucPhanMem.repository.HVRepository;
+import com.example.BTL_KienTrucPhanMem.repository.HocVienRepository;
 import com.example.BTL_KienTrucPhanMem.repository.LopHocDangKyRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.List;
 public class DangKyHocService {
 
     @Autowired
-    private HVRepository hocVienRepo;
+    private HocVienRepository hocVienRepo;
 
     @Autowired
     private LopHocDangKyRepository lopHocDangKyRepo;
