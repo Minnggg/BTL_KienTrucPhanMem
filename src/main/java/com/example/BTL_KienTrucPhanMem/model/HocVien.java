@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 public class HocVien {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer thanhVienId;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "thanhVienId")
+    @MapsId
     private ThanhVien thanhVien;
 }
 
