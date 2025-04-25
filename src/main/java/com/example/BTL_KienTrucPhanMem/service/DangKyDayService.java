@@ -30,7 +30,7 @@ public class DangKyDayService {
         return dkdRepo.save(dk);
     }
 
-    public void deleteDKD(DangKyDay dk) {
-        dkdRepo.delete(dk);
+    public void deleteDKD(Integer dkdId) {
+        dkdRepo.deleteById(dkdId);
     }
 }

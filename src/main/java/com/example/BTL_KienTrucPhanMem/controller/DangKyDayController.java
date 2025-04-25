@@ -27,19 +27,14 @@ public class DangKyDayController {
     @Autowired
     private DangKyDayService dkdSv;
 
-    @Autowired
-    private LopHocRepository lopHocRepository;
-    @Autowired
-    private DangKyDayRepository dangKyDayRepository;
-
     @GetMapping("/teacher/dang-ky-day")
     public String dangKyDay(HttpSession session, Model model) {
         NhanVien gv = (NhanVien) session.getAttribute("gv");
         if (gv == null) return "redirect:/login";
         ThanhVien thanhVien = gv.getThanhVien(); // assuming NhanVien has a ThanhVien property
 
-        List<LopHoc> lopChuaDangKy = lopHocRepository.findLopHocChuaDangKyByThanhVienId(thanhVien.getId());
-        List<DangKyDay> lopDaDangKy = dangKyDayRepository.findByThanhVienId(thanhVien.getId());
+        List<LopHoc> lopChuaDangKy = dkdSv.getLopHocChuaDangKy(thanhVien.getId());
+        List<DangKyDay> lopDaDangKy = dkdSv.getLopHocDaDangKy(thanhVien.getId());
 
         model.addAttribute("tbLop", lopChuaDangKy);
         model.addAttribute("tbDK", lopDaDangKy);
@@ -72,7 +67,7 @@ public class DangKyDayController {
 
     @GetMapping("/xoadkday")
     public String xoaDangKyDay(@RequestParam("dkdId") Integer dkdId) {
-        dangKyDayRepository.deleteById(dkdId);
+        dkdSv.deleteDKD(dkdId);
         return "redirect:/teacher/dang-ky-day"; // quay lại trang chính
     }
 
