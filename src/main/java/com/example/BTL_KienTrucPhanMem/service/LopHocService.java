@@ -10,17 +10,13 @@ import java.util.List;
 @Service
 public class LopHocService {
     @Autowired
-    LopHocRepository lopHocRepository;
+    LopHocRepository lhRepo;
 
-    public List<LopHoc> getLopChuaDangKyCuaHocVien(Integer hocVienId) {
-        return lopHocRepository.findLopChuaDangKy(hocVienId);
+    public List<LopHoc> getLopChuaDangKyCuaHocVien(Integer hvID) {
+        return lhRepo.findLopChuaDangKy(hvID);
     }
 
     public List<LopHoc> getLopHocByIds(List<Integer> ids) {
-        return lopHocRepository.findAllById(ids);
-    }
-
-    public List<LopHoc> findAllLH() {
-        return lopHocRepository.findAll();
+        return lhRepo.findAllById(ids);
     }
 }

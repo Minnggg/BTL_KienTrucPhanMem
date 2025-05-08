@@ -13,9 +13,6 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/admin/giaovien}">Quản lý giáo viên</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" th:href="@{/admin/dang-ky-hoc/chonhv}">Đăng kí học</a>
                 </li>
             </ul>
@@ -25,7 +22,7 @@
 
 <div class="w-50 mx-auto p-5">
     <h2 class="mb-5 text-center fw-bold">Xác nhận đăng ký học</h2>
-
+    <h3 class="mb-5 fw-bold">Thông tin học viên</h3>
     <!-- Thông tin học viên -->
     <div class="card mb-4">
         <div class="card-body">
@@ -35,7 +32,7 @@
             <p class="mb-0"><strong>SĐT:</strong> <span th:text="${hv.thanhVien.sdt}"></span></p>
         </div>
     </div>
-
+    <h3 class="mb-5 fw-bold">Lớp đã đăng ký</h3>
     <!-- Danh sách lớp đã chọn -->
     <div class="table-responsive mb-2">
         <table class="table table-hover table-bordered align-middle text-center">

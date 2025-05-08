@@ -16,29 +16,25 @@ import java.util.List;
 public class DangKyHocService {
 
     @Autowired
-    private HocVienRepository hocVienRepo;
+    private HocVienRepository hvRepo;
 
     @Autowired
-    private LopHocDangKyRepository lopHocDangKyRepo;
+    private LopHocDangKyRepository lhdkRepo;
 
     @Autowired
-    private DangKyHocRepository dangKyHocRepository;
+    private DangKyHocRepository dkhRepo;
 
     public HocVien getHocVienById(int id) {
-        return hocVienRepo.findById(id).orElse(null);
+        return hvRepo.findById(id).orElse(null);
     }
 
-    public List<LopHocDangKy> getLopHocDangKyByHocVienId(int hvId) {
-        return lopHocDangKyRepo.findByHocVienId(hvId);
-    }
-
-    public void saveLopHocDangKy(LopHocDangKy dangKy) {
-        lopHocDangKyRepo.save(dangKy);
+    public void saveLopHocDangKy(LopHocDangKy dk) {
+        lhdkRepo.save(dk);
     }
 
     @Transactional
-    public void saveDangKyHoc(DangKyHoc dangKyHoc) {
-        dangKyHocRepository.save(dangKyHoc);
+    public void saveDangKyHoc(DangKyHoc dk) {
+        dkhRepo.save(dk);
     }
 }
 

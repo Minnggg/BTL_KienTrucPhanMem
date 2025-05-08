@@ -13,9 +13,6 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/admin/giaovien}">Quản lý giáo viên</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" th:href="@{/admin/dang-ky-hoc/chonhv}">Đăng kí học</a>
                 </li>
             </ul>
@@ -38,6 +35,7 @@
                 <th>Mô tả</th>
                 <th>Mức độ</th>
                 <th>Chương trình</th>
+                <th>Học phí</th>
                 <th>Chọn</th>
             </tr>
             </thead>
@@ -47,6 +45,7 @@
                 <td th:text="${lop.mota}">Mô tả</td>
                 <td th:text="${lop.mucDo.ten}">Mức độ</td>
                 <td th:text="${lop.mucDo.chuongTrinhHoc.ten}">Chương trình</td>
+                <td th:text="${#numbers.formatDecimal(lop.hocphi, 0, 'COMMA', 0, 'POINT')}">Học phí</td>
                 <td>
                     <input type="checkbox" name="lopIds" th:value="${lop.id}" class="checkbox-custom"/>
                 </td>

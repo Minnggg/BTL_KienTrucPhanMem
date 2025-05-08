@@ -15,34 +15,28 @@
 
     <!-- Thông tin học viên -->
     <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-dark text-white fw-semibold">
-            Thông tin học viên
-        </div>
         <div class="card-body">
             <p><strong>Họ tên:</strong> <span th:text="${hv.thanhVien.hoten}">Nguyễn Văn A</span></p>
-            <p><strong>Họ tên:</strong> <span th:text="${hv.thanhVien.ngaysinh}">01/01/2001</span></p>
-            <p><strong>Họ tên:</strong> <span th:text="${hv.thanhVien.sdt}">0123456789</span></p>
+            <p><strong>Ngày sinh:</strong> <span th:text="${hv.thanhVien.ngaysinh}">01/01/2001</span></p>
+            <p><strong>Sđt:</strong> <span th:text="${hv.thanhVien.sdt}">0123456789</span></p>
             <p><strong>Email:</strong> <span th:text="${hv.thanhVien.email}">email@example.com</span></p>
         </div>
     </div>
 
     <!-- Danh sách lớp đã đăng ký -->
     <div class="card shadow-sm mb-4">
-        <div class="card-header bg-dark text-white fw-semibold">
-            Danh sách lớp đã đăng ký
-        </div>
         <div class="card-body p-0">
             <table class="table table-hover table-bordered text-center mb-0">
                 <thead class="table-secondary">
                 <tr>
-                    <th>Tên lớp</th>
+                    <th>Tên</th>
                     <th>Mô tả</th>
-                    <th>Học phí (VND)</th>
+                    <th>Học phí</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="lop : ${listLop}">
-                    <td th:text="${lop.ten}">Tên lớp</td>
+                    <td th:text="${lop.ten}">Tên</td>
                     <td th:text="${lop.mota}">Mô tả</td>
                     <td th:text="${#numbers.formatDecimal(lop.hocphi, 0, 'COMMA', 0, 'POINT')}">0</td>
                 </tr>
@@ -57,7 +51,7 @@
     </div>
 
     <div class="text-center mt-4">
-        <a class="btn btn-outline-primary w-100 btn-lg" href="/admin/dashboard" role="button">Về dashboard</a>
+        <a class="btn btn-outline-primary w-100 btn-lg" href="/admin/dashboard" role="button">Về trang chủ</a>
     </div>
 
 </div>

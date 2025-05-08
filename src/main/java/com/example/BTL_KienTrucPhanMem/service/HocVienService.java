@@ -13,28 +13,25 @@ import java.util.List;
 public class HocVienService {
 
     @Autowired
-    private HocVienRepository hocVienRepository;
+    private HocVienRepository hvRepo;
 
     @Autowired
-    private ThanhVienRepository thanhVienRepository;
+    private ThanhVienRepository tvRepo;
 
 
-    public void saveHocVien(HocVien hocVien) {
-        // Lưu ThanhVien trước
-        ThanhVien savedTV = thanhVienRepository.save(hocVien.getThanhVien());
-        hocVien.setThanhVien(savedTV);
-
-        // Lưu HocVien
-        hocVienRepository.save(hocVien);
+    public void saveHocVien(HocVien hv) {
+        ThanhVien savedTV = tvRepo.save(hv.getThanhVien());
+        hv.setThanhVien(savedTV);
+        hvRepo.save(hv);
     }
 
     public List<HocVien> getAllHocVien() {
-        return hocVienRepository.findAll();
+        return hvRepo.findAll();
     }
 
 
-    public List<HocVien> searchByTen(String keyword) {
-        return hocVienRepository.searchByHoTen(keyword);
+    public List<HocVien> searchByTen(String kw) {
+        return hvRepo.searchByHoTen(kw);
     }
 
 }

@@ -21,24 +21,24 @@ public class DangKyHocController {
     HocVienRepository hocVienRepository;
 
     @Autowired
-    private HocVienService hocVienService;
+    private HocVienService hvSv;
 
     @Autowired
-    private LopHocService lopHocService;
+    private LopHocService lhSv;
 
     @Autowired
-    private DangKyHocService dkhService;
+    private DangKyHocService dkhSv;
 
     @PostMapping("/xacnhandkhoc")
     public String showXacNhanPage(Model model,
-                                  @RequestParam("hocVienId") int hocVienId,
-                                  @RequestParam(value = "lopIds", required = false) List<Integer> lopIds) {
+                                  @RequestParam("hocVienId") int hvID,
+                                  @RequestParam(value = "lopIds", required = false) List<Integer> lopID) {
 
-        HocVien hocVien = dkhService.getHocVienById(hocVienId);
-        List<LopHoc> cacLopChuaDangKy = lopHocService.getLopChuaDangKyCuaHocVien(hocVienId);
+        HocVien hocVien = dkhSv.getHocVienById(hvID);
+        List<LopHoc> cacLopChuaDangKy = lhSv.getLopChuaDangKyCuaHocVien(hvID);
 
         List<LopHoc> listLop = cacLopChuaDangKy.stream()
-                .filter(lop -> lopIds != null && lopIds.contains(lop.getId()))
+                .filter(lop -> lopID != null && lopID.contains(lop.getId()))
                 .toList();
 
         double tongTien = listLop.stream().mapToDouble(LopHoc::getHocphi).sum();
@@ -46,7 +46,7 @@ public class DangKyHocController {
         model.addAttribute("hv", hocVien);
         model.addAttribute("listLop", listLop);
         model.addAttribute("tongTien", tongTien);
-        model.addAttribute("lopIds", lopIds);
+        model.addAttribute("lopIds", lopID);
         return "xacnhandkhoc";
     }
 
@@ -55,28 +55,24 @@ public class DangKyHocController {
                                 @RequestParam("hvId") int hocVienId,
                                 @RequestParam("lopIds") List<Integer> lopIds) {
 
-        // Lấy học viên và lớp học đã chọn
-        HocVien hocVien = dkhService.getHocVienById(hocVienId);
-        List<LopHoc> listLop = lopHocService.getLopHocByIds(lopIds);
+        HocVien hocVien = dkhSv.getHocVienById(hocVienId);
+        List<LopHoc> listLop = lhSv.getLopHocByIds(lopIds);
         double tongTien = listLop.stream().mapToDouble(LopHoc::getHocphi).sum();
 
-        // 1. Tạo và lưu bản ghi DangKyHoc
         DangKyHoc dangKyHoc = new DangKyHoc();
         dangKyHoc.setThanhVien(hocVien.getThanhVien());
         dangKyHoc.setTongtien(tongTien);
         dangKyHoc.setNgayDK(LocalDate.now());
 
-        dkhService.saveDangKyHoc(dangKyHoc); // CẦN đảm bảo method này tồn tại trong service
+        dkhSv.saveDangKyHoc(dangKyHoc);
 
-        // 2. Tạo và lưu từng bản ghi LopHocDangKy
         for (LopHoc lop : listLop) {
             LopHocDangKy dk = new LopHocDangKy();
-            dk.setDangKyHoc(dangKyHoc); // gắn vào bản ghi đã có trong DB
+            dk.setDangKyHoc(dangKyHoc);
             dk.setLopHoc(lop);
-            dkhService.saveLopHocDangKy(dk);
+            dkhSv.saveLopHocDangKy(dk);
         }
 
-        // Truyền sang view
         model.addAttribute("hv", hocVien);
         model.addAttribute("listLop", listLop);
         model.addAttribute("tongTien", tongTien);
@@ -94,10 +90,10 @@ public class DangKyHocController {
     public String chonHocVien(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
         List<HocVien> hocViens;
         if (keyword != null && !keyword.isEmpty()) {
-            hocViens = hocVienService.searchByTen(keyword);
+            hocViens = hvSv.searchByTen(keyword);
             model.addAttribute("keyword", keyword);
         } else {
-            hocViens = hocVienService.getAllHocVien();
+            hocViens = hvSv.getAllHocVien();
         }
         model.addAttribute("hocViens", hocViens);
         return "chonhv";
@@ -107,34 +103,34 @@ public class DangKyHocController {
     @GetMapping("/hocvien/themmoi")
     public String hienThiFormThem(Model model) {
         HocVien hocVien = new HocVien();
-        hocVien.setThanhVien(new ThanhVien()); // khởi tạo tránh NullPointer
+        hocVien.setThanhVien(new ThanhVien());
         model.addAttribute("hocVien", hocVien);
         return "themmoihv";
     }
 
 
     @PostMapping("/hocvien/them-moi")
-    public String addHocVien(@ModelAttribute HocVien hocVien) {
-        hocVienService.saveHocVien(hocVien);
+    public String addHocVien(@ModelAttribute HocVien hv) {
+        hvSv.saveHocVien(hv);
         return "redirect:/admin/dang-ky-hoc/chonhv";
     }
 
     @GetMapping("/admin/dang-ky-hoc/chonhv")
     public String dangKyHoc(Model model) {
-        List<HocVien> hocViens = hocVienService.getAllHocVien();
+        List<HocVien> hocViens = hvSv.getAllHocVien();
         model.addAttribute("hocViens", hocViens);
         return "chonhv";
     }
 
     @GetMapping("/chonlop")
-    public String chonLop(Model model, @RequestParam("selectedHV") Integer hocVienId) {
-        HocVien hocVien = hocVienRepository.findById(hocVienId).orElse(null);
+    public String chonLop(Model model, @RequestParam("selectedHV") Integer hvID) {
+        HocVien hocVien = hocVienRepository.findById(hvID).orElse(null);
 
-        List<LopHoc> cacLopChuaDangKy = lopHocService.getLopChuaDangKyCuaHocVien(hocVienId);
+        List<LopHoc> cacLopChuaDangKy = lhSv.getLopChuaDangKyCuaHocVien(hvID);
 
         model.addAttribute("listLop", cacLopChuaDangKy);
         model.addAttribute("hv", hocVien);
-        return "chonlop"; // Giao diện chonlop.html
+        return "chonlop";
     }
 }
 
